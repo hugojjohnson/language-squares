@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 // the bson library to create object ids. If you want to build for old browsers, just remove
 // every instance of 'esnext' in this file and it should be all good.
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "",
@@ -19,6 +20,7 @@ export default defineConfig({
     }
   },
   server: {
-    open: "danish-squares"
+    open: "language-squares"
   }
 })
+

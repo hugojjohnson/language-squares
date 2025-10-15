@@ -2,14 +2,14 @@ import { Dispatch, SetStateAction } from "react";
 
 
 export type Word = {
-    dW: string;
-    dS: string;
-    eW: string;
-    eS: string;
+    targetWord: string;
+    targetSentence: string;
+    targetPinyin: string;
+    englishWord: string;
+    englishSentence: string;
     id: string;
-    learned: boolean;
+    bucket: number;
     starred: boolean;
-    _id: string;
 }
 
 export type SafeData = {

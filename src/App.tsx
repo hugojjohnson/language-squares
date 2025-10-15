@@ -7,7 +7,7 @@ import { RequestResponse, UserData, Word } from "./Interfaces";
 
 // Components
 import Dashboard from "./components/main/Main";
-import AddWords from "./components/main/AddWords";
+import AddWords from "./components/main/add/AddWords";
 import Header from "./components/other/Header";
 // import { get } from "./Network";
 import Signin from "./components/user/Signin";
@@ -23,7 +23,7 @@ function App(): React.ReactElement {
   // console.debug(import.meta.env.VITE_GOOGLE_CLIENT_ID)
 
   useEffect(() => {
-    const tempUser = JSON.parse(localStorage.getItem("danishSquaresUser") || "{}")
+    const tempUser = JSON.parse(localStorage.getItem("languageSquaresUser") || "{}")
     if (!tempUser.token) {
       setUser(null)
       return
@@ -49,10 +49,10 @@ function App(): React.ReactElement {
       return
     }
     if (user?.token) {
-      localStorage.setItem("danishSquaresUser", JSON.stringify(user))
+      localStorage.setItem("languageSquaresUser", JSON.stringify(user))
       console.debug("User changed.")
     } else {
-      localStorage.removeItem("danishSquaresUser")
+      localStorage.removeItem("languageSquaresUser")
       console.debug("Signed out.")
     }
   }, [user])
@@ -61,7 +61,7 @@ function App(): React.ReactElement {
   if (user === null || user === undefined) {
     return (
       <UserContext.Provider value={[user, setUser]}>
-        <BrowserRouter basename="/danish-squares">
+        <BrowserRouter basename="/language-squares">
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Signin />} />
@@ -77,7 +77,7 @@ function App(): React.ReactElement {
 
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <BrowserRouter basename="/danish-squares">
+      <BrowserRouter basename="/language-squares">
         <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Dashboard />} />

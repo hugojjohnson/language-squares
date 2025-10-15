@@ -30,7 +30,7 @@ export default function Main() {
 
     async function star(id: string) {
         const user2 = structuredClone(user)
-        const myIndex = user.words.findIndex(word => word._id === id)
+        const myIndex = user.words.findIndex(word => word.id === id)
         if (myIndex === -1) {
             throw new Error("Word not found.")
         }
@@ -60,8 +60,9 @@ export default function Main() {
         <table className="table-fixed w-full">
             <thead className="text-left">
                 <tr>
-                    <th>Danish</th>
+                    <th>Target</th>
                     <th>Sentence</th>
+                    <th>Pinyin</th>
                     <th>English</th>
                     <th>Sentence</th>
                     <th className="text-center">Learned</th>
@@ -72,14 +73,15 @@ export default function Main() {
             {
                 user.words.map((word, index) => <tr key={index} className="border-b-2 border-b-gray-300 py-0">
                     {/* Silly HTML, I have to add the table padding here... */}
-                    <td className="py-4">{word.dW}</td>
-                    <td>{word.dS}</td>
-                    <td>{word.eW}</td>
-                    <td>{word.eS}</td>
-                    <td><div className={`w-3 h-3 rounded-full ${word.learned ? "bg-green-500" : "bg-orange-300"} mx-auto`}></div></td>
+                    <td className="py-4">{word.targetWord}</td>
+                    <td>{word.targetSentence}</td>
+                    <td>{word.targetPinyin}</td>
+                    <td>{word.englishWord}</td>
+                    <td>{word.englishSentence}</td>
+                    <td><div className={`w-3 h-3 rounded-full ${word.bucket > 0 ? "bg-green-500" : "bg-orange-300"} mx-auto`}></div></td>
                     <td>
-                        { word.starred && <img onClick={() => star(word._id)} src="./star.png" className="w-8 mx-auto" /> }
-                        { !word.starred && <div onClick={() => star(word._id)} className="w-1 h-1 bg-gray-400 rounded-full mx-auto"></div> }
+                        { word.starred && <img onClick={() => star(word.id)} src="./star.png" className="w-8 mx-auto" /> }
+                        { !word.starred && <div onClick={() => star(word.id)} className="w-1 h-1 bg-gray-400 rounded-full mx-auto"></div> }
                     </td>
                 </tr>)
             }
