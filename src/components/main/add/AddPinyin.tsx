@@ -1,6 +1,6 @@
 import pinyin from "pinyin";
 import { useState } from "react";
-import { useAddWords } from "../../../hooks/useAddWords";
+import { useWordsManager } from "../../../hooks/useWordsManager";
 
 interface Props {
     items: string[][];
@@ -24,13 +24,13 @@ export default function AddPinyin({ items }: Props) {
         index: 0,
         isChineseCharacter: isChineseCharacter(char)
     }))));
-    const { addWords, errorText } = useAddWords();
+    const { addWords } = useWordsManager();
 
     return <div className="">
         {
-            matrix.map((sentence, i) => <div className="flex flex-row gap-2">
+            matrix.map((sentence, i) => <div key={i} className="flex flex-row gap-2">
                 {
-                    sentence.map((char, j) => <p onClick={() => {
+                    sentence.map((char, j) => <p key={j} onClick={() => {
                         const c = structuredClone(matrix);
                         c[i][j].index += 1;
                         c[i][j].index %= c[i][j].pinyin.length;
@@ -40,8 +40,8 @@ export default function AddPinyin({ items }: Props) {
                 }
             </div>)
         }
-        <p>{errorText}</p>
-        <button onClick={() => addWords(items, matrix)} className="p-3 mt-10 rounded-md border-[1px] border-gray-600">Add</button>
+        <p>{addWords.error?.message}</p>
+        <button onClick={() => addWords.mutate({ items, matrix })} className="p-3 mt-10 rounded-md border-[1px] border-gray-600">Add</button>
     </div>
 }
 

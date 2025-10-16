@@ -3,24 +3,24 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from "./Context";
 
 // Interfaces
-import { RequestResponse, UserData, Word } from "./Interfaces";
+import { UserData } from "./Interfaces";
 
 // Components
 import Dashboard from "./components/main/Main";
 import AddWords from "./components/main/add/AddWords";
 import Header from "./components/other/Header";
-// import { get } from "./Network";
 import Signin from "./components/user/Signin";
 import Signup from "./components/user/Signup";
 import { NoPage } from "./components/other/NoPage";
-import { get } from "./Network";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useWordsQuery } from "./hooks/useWordsQuery";
 
 function App(): React.ReactElement {
   // Context
   const [user, setUser] = useState<UserData>(undefined);
+  const queryClient = new QueryClient()
+  const { getUpdates } = useWordsQuery();
 
-  // Environment variables are as easy as that! Just don't forget to prefix them with VITE_.
-  // console.debug(import.meta.env.VITE_GOOGLE_CLIENT_ID)
 
   useEffect(() => {
     const tempUser = JSON.parse(localStorage.getItem("languageSquaresUser") || "{}")
@@ -28,21 +28,15 @@ function App(): React.ReactElement {
       setUser(null)
       return
     }
-
+    // tempUser.words = []; // remove words; you should use tanstack query now.
     setUser(tempUser)
-    updateUser(tempUser)
-
-    // Update user
-    async function updateUser(tempUser: UserData): Promise<void> {
-      const response: RequestResponse<Word[]> = await get("auth/get-updates", { token: tempUser?.token })
-      if (response.success && tempUser?.username) {
-        setUser({
-          ...tempUser,
-          words: response.data
-        })
-      }
-    }
   }, [])
+
+  useEffect(() => {
+    if (user?.token) {
+      getUpdates.refetch();
+    }
+  }, [user?.token]);
 
   useEffect(() => {
     if (user === undefined) {
@@ -60,32 +54,36 @@ function App(): React.ReactElement {
   // Component
   if (user === null || user === undefined) {
     return (
-      <UserContext.Provider value={[user, setUser]}>
-        <BrowserRouter basename="/language-squares">
-          <Routes>
-            <Route path="/" element={<Header />}>
-              <Route index element={<Signin />} />
-              <Route path="sign-up" element={<Signup />} />
-              <Route path="sign-in" element={<Signin />} />
-              <Route path="*" element={<NoPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </UserContext.Provider>
+      <QueryClientProvider client={queryClient}>
+        <UserContext.Provider value={[user, setUser]}>
+          <BrowserRouter basename="/language-squares">
+            <Routes>
+              <Route path="/" element={<Header />}>
+                <Route index element={<Signin />} />
+                <Route path="sign-up" element={<Signup />} />
+                <Route path="sign-in" element={<Signin />} />
+                <Route path="*" element={<NoPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </UserContext.Provider>
+      </QueryClientProvider>
     )
   }
 
   return (
-    <UserContext.Provider value={[user, setUser]}>
-      <BrowserRouter basename="/language-squares">
-        <Routes>
-          <Route path="/" element={<Header />}>
-            <Route index element={<Dashboard />} />
-            <Route path="add-words" element={<AddWords />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </UserContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <UserContext.Provider value={[user, setUser]}>
+        <BrowserRouter basename="/language-squares">
+          <Routes>
+            <Route path="/" element={<Header />}>
+              <Route index element={<Dashboard />} />
+              <Route path="add-words" element={<AddWords />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </QueryClientProvider>
   );
 }
 
