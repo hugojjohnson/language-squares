@@ -3,7 +3,7 @@ import { RequestResponse } from "./Interfaces";
 
 
 // Points at the BACKEND
-export const baseURL = import.meta.env.VITE_BASE_URL;
+export const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 // ? "http://localhost:3002/language-squares/"
 // : "https://example.com/language-squares/");

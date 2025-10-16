@@ -3,8 +3,8 @@ import { loadEnv } from 'vite';
 import { z } from 'zod';
 
 export const nodeEnvSchema = z.object({
-  BACKEND_API_URL: z.url(),
-  NODE_ENV: z.enum(['development', 'production', 'test']),
+  // BACKEND_API_URL: z.url(),
+  // NODE_ENV: z.enum(['development', 'production', 'test']),
 });
 
 const mode = process.env.NODE_ENV || 'development';

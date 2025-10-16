@@ -7,7 +7,7 @@ const env = loadEnv(mode, process.cwd(), ''); // load all env vars
 
 // Much sadness: You have to update this in 2 places :(. ./vite-env.d.ts
 export const viteEnvSchema = z.object({
-  VITE_BASE_URL: z.string().url(),
+  VITE_BACKEND_URL: z.url(),
   // VITE_FEATURE_FLAG: z.enum(['on', 'off']).default('off'),
 });
 

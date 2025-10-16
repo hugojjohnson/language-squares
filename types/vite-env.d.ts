@@ -6,7 +6,7 @@ interface ViteTypeOptions {
 
 // Much sadness: You have to update this in 2 places :(. ./check-vite-env.ts
 declare interface ImportMetaEnv {
-  readonly VITE_BASE_URL: string;
+  readonly VITE_BACKEND_URL: string;
 }
 
 declare interface ImportMeta {
