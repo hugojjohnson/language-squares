@@ -8,6 +8,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    "paths": {
+      "@public/*": ["./public/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -21,17 +25,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    /* ChatGPT */
-    // "noImplicitAny": true,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "strictBindCallApply": true,
-    // "strictPropertyInitialization": true,
-    // "noImplicitThis": true,
-    // "alwaysStrict": true,
-    // "esModuleInterop": true,
-    // "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "env"]
 }

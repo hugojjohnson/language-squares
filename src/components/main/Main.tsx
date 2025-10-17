@@ -1,5 +1,6 @@
 import useUser from "../../hooks/useUser"
 import { useWordsManager } from "../../hooks/useWordsManager";
+import binImg from "@public/bin.png";
 
 export default function Main() {
     const [user, _] = useUser()
@@ -43,7 +44,7 @@ export default function Main() {
                         { word.starred && <img onClick={() => starWord.mutate(word.id)} src="./star.png" className="w-8 mx-auto" /> }
                         { !word.starred && <div onClick={() => starWord.mutate(word.id)} className="w-1 h-1 bg-gray-400 rounded-full mx-auto"></div> }
                     </td>
-                    <td><img src="bin.png" alt="delete icon" onClick={() => deleteWord.mutate(word.id)} className="w-5 mx-auto group-hover:visible invisible hover:cursor-pointer" /></td>
+                    <td><img src={binImg} alt="delete icon" onClick={() => deleteWord.mutate(word.id)} className="w-5 mx-auto group-hover:visible invisible hover:cursor-pointer" /></td>
                 </tr>)
             }
             </tbody>
