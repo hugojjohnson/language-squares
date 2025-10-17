@@ -10,7 +10,7 @@ permissions:
 
 env:
   VITE_BACKEND_URL: https://language.workaholic.work/language-squares/
-  PUBLC_EXTENSION: /language-squares/
+  PUBLIC_FOLDER_PREFIX: /language-squares/
 
 jobs:
   build-and-deploy:
