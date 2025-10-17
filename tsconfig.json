@@ -9,7 +9,7 @@
     "skipLibCheck": true,
 
     "paths": {
-      "@public/*": ["./public/*"]
+      "@public/*": ["/public/*"]
     },
 
     /* Bundler mode */
