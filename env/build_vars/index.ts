@@ -1,8 +1,12 @@
 import { z } from 'zod';
+import dotenv from 'dotenv';
 
-// Define your schema for env vars
+// dotenv must be used for build time variables, i.e. process.env variables,
+// because vite doesn't load them automatically.
+dotenv.config();
+
 const envSchema = z.object({
-  PUBLIC_FOLDER_PREFIX: z.string().default("")
+  PUBLIC_FOLDER_PREFIX: z.string()
 });
 
 // Parse process.env and throw if missing/invalid
