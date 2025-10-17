@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { PUBLIC_FOLDER_PREFIX } from "./env/build"
 
 // esnext is a recent addition so it won't work on old browsers. However it lets you use
 // the bson library to create object ids. If you want to build for old browsers, just remove
@@ -8,7 +9,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "",
+  base: PUBLIC_FOLDER_PREFIX,
   build: {
     target: "esnext",
     outDir: 'build',

@@ -5,7 +5,7 @@
   "homepage": "https://hugojjohnson.github.io/language-squares",
   "type": "module",
   "scripts": {
-    "check-env": "ts-node types/check-node-env.ts && ts-node types/check-vite-env.ts",
+    "check-env": "ts-node env/check-vite-env.ts",
     "dev": "npm run check-env && vite",
     "build": "npm run check-env && tsc && vite build",
     "test-server": "NODE_ENV=production vite",

@@ -33,5 +33,5 @@
     // "esModuleInterop": true,
     // "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "types/"]
+  "include": ["src", "env"]
 }
