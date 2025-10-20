@@ -1,10 +1,12 @@
 import useUser from "../../hooks/useUser"
 import { useWordsManager } from "../../hooks/useWordsManager";
 import binImg from "@public/bin.png";
+import { useWordsQuery } from "../../hooks/useWordsQuery";
 
 export default function Main() {
     const [user, _] = useUser()
     const { deleteWord, starWord, generateAudio } = useWordsManager();
+    const { getUpdates } = useWordsQuery();
 
     
 

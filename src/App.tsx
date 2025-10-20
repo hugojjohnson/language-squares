@@ -13,13 +13,11 @@ import Signin from "./components/user/Signin";
 import Signup from "./components/user/Signup";
 import { NoPage } from "./components/other/NoPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useWordsQuery } from "./hooks/useWordsQuery";
 
 function App(): React.ReactElement {
   // Context
   const [user, setUser] = useState<UserData>(undefined);
   const queryClient = new QueryClient()
-  const { getUpdates } = useWordsQuery();
 
 
   useEffect(() => {
@@ -31,12 +29,6 @@ function App(): React.ReactElement {
     // tempUser.words = []; // remove words; you should use tanstack query now.
     setUser(tempUser)
   }, [])
-
-  useEffect(() => {
-    if (user?.token) {
-      getUpdates.refetch();
-    }
-  }, [user?.token]);
 
   useEffect(() => {
     if (user === undefined) {

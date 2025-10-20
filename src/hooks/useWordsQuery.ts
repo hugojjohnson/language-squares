@@ -13,10 +13,18 @@ export function useWordsQuery() {
   const getUpdatesQuery = useQuery({
     queryKey: ["user-updates", userDangerous?.username],
     queryFn: async () => {
-      if (!userDangerous?.token) throw new Error("No token available");
-
+      console.log("updatinggg")
+      if (!userDangerous?.token) {
+        console.error("No user token");
+        throw new Error("No token available");
+      }
+      console.log("HI1!");
       const response: RequestResponse<Word[]> = await get("auth/get-updates", { token: userDangerous.token });
+      console.log("HI2!");
       if (!response.success) throw new Error(response.data as string);
+
+      console.log("data");
+      console.log(response.data);
 
     //   Update local user state with the latest words
       setUserDangerous({ ...userDangerous, words: response.data });
@@ -24,7 +32,6 @@ export function useWordsQuery() {
       console.log(response.data)
       return response.data;
     },
-    enabled: !!userDangerous?.token, // only run if user exists
     staleTime: 1000 * 60 * 5, // 5 min cache (optional)
   });
 
