@@ -111,10 +111,12 @@ export function useWordsManager() {
   // GENERATE AUDIO
   // ----------------------
   const generateAudioMutation = useMutation({
-    mutationFn: async () => {
-      const response = await axios.get<Blob>(baseURL + "main/generate-audio", {
+    mutationFn: async ({ ids }: { ids: string[] }) => {
+      const response = await axios.post<Blob>(baseURL + "main/generate-audio", { ids }, {
         responseType: "blob",
-        params: { token: user.token },
+        params: {
+          token: user.token
+        },
       });
 
       const blob = new Blob([response.data], { type: "audio/mp3" });

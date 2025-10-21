@@ -18,7 +18,6 @@ export default function AddWordsText({ moveToPinyin } : Props) {
     async function addWords() {
         setErrorText("Sending request...")
         const myWords = words.split(/\\|\n/)
-        console.log(myWords)
         if (myWords.length % 4 !== 0) {
             console.log(words.split(/\\\|\n/))
             setErrorText("Error: Length is not correct")
@@ -27,19 +26,6 @@ export default function AddWordsText({ moveToPinyin } : Props) {
         const myList = splitIntoFour(myWords)
 
         moveToPinyin(myList);
-
-        // console.log(myList)
-        // const response = await post<Word[]>("/main/add-words", { token: user.token }, { dW: myList[2].join("\n"), dS: myList[3].join("\n"), eW: myList[0].join("\n"), eS: myList[1].join("\n") })
-        // console.log(response.data)
-        // if (response.success) {
-        //     setUser({ ...user, words: user.words.concat(response.data) })
-        //     setWords("")
-        //     setIsAnimating(true)
-        //     setErrorText("")
-        //     setTimeout(() => setIsAnimating(false), 1500)
-        // } else {
-        //     setErrorText("Error: " + response.data)
-        // }
     }
 
     return <div className="flex flex-col">
