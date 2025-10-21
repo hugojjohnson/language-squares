@@ -5,10 +5,12 @@ import { Word } from "../Interfaces";
 import { PinyinWord } from "../components/main/add/AddPinyin";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useWordsQuery } from "./useWordsQuery";
 
 export function useWordsManager() {
   const [user, setUser] = useUser();
   const navigate = useNavigate();
+  const { getUpdates } = useWordsQuery(); // Pull data from server
 
   // ----------------------
   // ADD WORDS
@@ -104,7 +106,7 @@ export function useWordsManager() {
         throw new Error(response.data as string);
       }
       return;
-    },
+    }
   });
 
   // ----------------------
@@ -130,6 +132,7 @@ export function useWordsManager() {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     },
+    onSettled: () => getUpdates.refetch()
   });
 
   return {

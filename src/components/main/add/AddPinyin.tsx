@@ -26,18 +26,22 @@ export default function AddPinyin({ items }: Props) {
     }))));
     const { addWords } = useWordsManager();
 
+    console.log(items);
     return <div className="">
         {
-            matrix.map((sentence, i) => <div key={i} className="flex flex-row gap-2">
-                {
-                    sentence.map((char, j) => <p key={j} onClick={() => {
-                        const c = structuredClone(matrix);
-                        c[i][j].index += 1;
-                        c[i][j].index %= c[i][j].pinyin.length;
-                        setMatrix(c);
-                    }}>{char.pinyin[char.index]}</p>
-                    )
-                }
+            matrix.map((sentence, i) => <div key={i}>
+                {/* <p className="italic text-gray-500">{pinyin(items[3][i]).join(" ")}</p> */}
+                <div className="flex flex-row gap-2">
+                    {
+                        sentence.map((char, j) => <p key={j} onClick={() => {
+                            const c = structuredClone(matrix);
+                            c[i][j].index += 1;
+                            c[i][j].index %= c[i][j].pinyin.length;
+                            setMatrix(c);
+                        }}>{char.pinyin[char.index]}</p>
+                        )
+                    }
+                </div>
             </div>)
         }
         <p>{addWords.error?.message}</p>
