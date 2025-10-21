@@ -82,6 +82,31 @@ export function useWordsManager() {
     },
   });
 
+
+  // ----------------------
+  // CHANGE BUCKET
+  // ----------------------
+  const changeBucketMutation = useMutation({
+    mutationFn: async ({ id, newBucket }: { id: string; newBucket: number }) => {
+      const userClone = structuredClone(user);
+      const idx = userClone.words.findIndex(word => word.id === id);
+      if (idx === -1) throw new Error("Word not found.");
+
+      const originalValue = userClone.words[idx].bucket;
+      userClone.words[idx].bucket = newBucket;
+      setUser(userClone);
+
+      const response = await post("/main/change-bucket", { token: user.token, id }, { newBucket });
+      if (!response.success) {
+        const reverted = structuredClone(userClone);
+        reverted.words[idx].bucket = originalValue;
+        setUser(reverted);
+        throw new Error(response.data as string);
+      }
+      return;
+    },
+  });
+
   // ----------------------
   // GENERATE AUDIO
   // ----------------------
@@ -110,5 +135,6 @@ export function useWordsManager() {
     deleteWord: deleteWordMutation,
     starWord: starWordMutation,
     generateAudio: generateAudioMutation,
+    changeBucket: changeBucketMutation
   };
 }

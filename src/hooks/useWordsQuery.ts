@@ -1,25 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { get } from "../Network";
 import { RequestResponse, Word } from "../Interfaces";
-import { useContext } from "react";
-import { UserContext } from "../Context";
+import useUser from "./useUser";
 
 
 export function useWordsQuery() {
-    const [userDangerous, setUserDangerous] = useContext(UserContext);
+    const [user, setUser] = useUser();
   // ----------------------
   // GET UPDATES
   // ----------------------
   const getUpdatesQuery = useQuery({
-    queryKey: ["user-updates", userDangerous?.username],
+    queryKey: ["user-updates", user.username],
     queryFn: async () => {
       console.log("updatinggg")
-      if (!userDangerous?.token) {
+      if (!user.token) {
         console.error("No user token");
         throw new Error("No token available");
       }
       console.log("HI1!");
-      const response: RequestResponse<Word[]> = await get("auth/get-updates", { token: userDangerous.token });
+      const response: RequestResponse<Word[]> = await get("auth/get-updates", { token: user.token });
       console.log("HI2!");
       if (!response.success) throw new Error(response.data as string);
 
@@ -27,7 +26,7 @@ export function useWordsQuery() {
       console.log(response.data);
 
     //   Update local user state with the latest words
-      setUserDangerous({ ...userDangerous, words: response.data });
+      setUser({ ...user, words: response.data });
       console.log("response.data")
       console.log(response.data)
       return response.data;
