@@ -56,7 +56,6 @@ export default function Main() {
             {/* <td onClick={() => setEditRow(index)} className="w-5 mx-auto group-hover:visible invisible hover:cursor-pointer text-center self-center">...</td> */}
 
             <td><img src={binImg} alt="delete icon" onClick={() => deleteWord.mutate(word.id)} className="w-5 mx-auto my-auto hover:cursor-pointer" /></td>
-            {/* <td>...</td> */}
         </tr>
     }
 
